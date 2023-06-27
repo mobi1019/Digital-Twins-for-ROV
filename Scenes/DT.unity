@@ -496,8 +496,10 @@ GameObject:
   - component: {fileID: 816458173}
   - component: {fileID: 816458177}
   - component: {fileID: 816458176}
-  - component: {fileID: 816458175}
   - component: {fileID: 816458174}
+  - component: {fileID: 816458175}
+  - component: {fileID: 816458178}
+  - component: {fileID: 816458179}
   m_Layer: 0
   m_Name: BlueRov
   m_TagString: Player
@@ -607,11 +609,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 816458169}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c162c140bd1eb14796cae1532d9fb32, type: 3}
+  m_Script: {fileID: 11500000, guid: 9490d677945ce204eb6794b13f87380a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vehicle: {fileID: 816458169}
-  rb: {fileID: 816458177}
 --- !u!114 &816458176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -641,6 +641,34 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &816458178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 816458169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c162c140bd1eb14796cae1532d9fb32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vehicle: {fileID: 816458169}
+  rb: {fileID: 816458177}
+--- !u!114 &816458179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 816458169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1b3c5a6cd3933646abb5e7a00e86232, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frontCam: {fileID: 0}
+  downCam: {fileID: 0}
 --- !u!1001 &991211094
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1133,8 +1161,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2028913572}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -2.0000002, y: 200.04, z: 0.00000023841858}
+  m_LocalRotation: {x: 0.1508803, y: 0.38758457, z: 0.06340112, w: -0.90718997}
+  m_LocalPosition: {x: 763.87775, y: -240.05913, z: -609.9074}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

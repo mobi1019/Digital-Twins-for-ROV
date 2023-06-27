@@ -16,7 +16,10 @@ public class CameraFollow : MonoBehaviour
 
     void Update()
     {
-        transform.eulerAngles += mouseSensitivity * new Vector3(x:-Input.GetAxis("Mouse Y"),y:Input.GetAxis("Mouse X"),z:0);
+        if (Input.GetMouseButton(0)){
+            transform.eulerAngles += mouseSensitivity * new Vector3(x:-Input.GetAxis("Mouse Y"),y:Input.GetAxis("Mouse X"),z:0);
+
+        }
        
     }
 
