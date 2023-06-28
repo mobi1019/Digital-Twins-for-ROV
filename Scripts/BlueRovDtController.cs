@@ -15,16 +15,32 @@ public class BlueRovDtController : MonoBehaviour
     // public GameObject waterLevel;                   // GameObject assosicated with the water surface.  
     // public GameObject AUVLevel;                     // The AUV's GameObject.
 
+    public bool initial_position = true;
+    public float speed = 0.01F;
+
     void Update()
     {
-        // if (BlueRovPoseSubscriber.position.x > 0 || BlueRovPoseSubscriber.position.x < 0){
-        //     Debug.Log(BlueRovPoseSubscriber.position.x); 
-        // }  
-        // Debug.Log(BlueRovPoseSubscriber.position.y);   
-        // Debug.Log(BlueRovPoseSubscriber.position.z);   
-        Debug.Log(BallPoseSubscriber.position.z);   
-        Debug.Log(BlueRovPoseSubscriber.position.x);   
-        // Debug.Log(BlueRovPoseSubscriber.dad);   
+        // The following lines of code are used to import control values coming from ROS,  subscribed by the Subscriber script
+		float sway = BlueRovPoseSubscriber.position.y;           
+		float heave = BlueRovPoseSubscriber.position.z;
+		float surge = BlueRovPoseSubscriber.position.x;
+		float yaw = BlueRovPoseSubscriber.rotation.z;
+		float roll = BlueRovPoseSubscriber.rotation.y;
+		float pitch = BlueRovPoseSubscriber.rotation.x;
+		float w = BlueRovPoseSubscriber.rotation.w;
+		
+		Vector3 movement = new Vector3(-surge, heave, sway);        // Make a vector for translation using the user input. 
+		Quaternion rotation = new Quaternion(roll, yaw, -1 * pitch, w);       // Make a vector for rotation using the user input. 
+																	 // Add relative force, i.e. force in the local coordinate system, using the Vector3 created by user Input. 
+		if (initial_position){
+            initial_position = false;
+            transform.position = movement;
+            transform.rotation = rotation;
+        }
+
+        float step = speed * Time.deltaTime;
+        transform.position = Vector3.MoveTowards(transform.position , movement, step);
+        transform.rotation = Quaternion.Lerp(transform.rotation, rotation, step);
 
     }
 

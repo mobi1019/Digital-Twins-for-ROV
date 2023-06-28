@@ -45,25 +45,16 @@ public class BlueRovPoseSubscriber : ROSBridgeSubscriber
     {
 
         // Debug.Log("Recieved Message : " + msg.ToYAMLString()); // Prints the recieved message
-        // // Update ball position, or whatever
-        OdometryMsg OdometryData = (OdometryMsg)msg; // This converts the message to Pose type so that it can be used.
-        // //ball = GameObject.Find("ball");
-        // //Vector3 ballPos = ball.transform.position;
+
+        OdometryMsg OdometryData = (OdometryMsg)msg; 
+
         position.x = OdometryData.GetPoseWithCovariance().GetPose().GetPosition().GetX();
-        dad = "you";
-        // position.x = OdometryData.GetPoseWithCovariance().GetPose().GetPosition().GetX(); // Vector3 position and Quaternion rotation are assigned values from the recieved message.
-        // position.y = OdometryData.GetPoseWithCovariance().GetPose().GetPosition().GetY();
-        // position.z = OdometryData.GetPoseWithCovariance().GetPose().GetPosition().GetZ();
+        position.y = OdometryData.GetPoseWithCovariance().GetPose().GetPosition().GetY();
+        position.z = OdometryData.GetPoseWithCovariance().GetPose().GetPosition().GetZ();
         
-        // position.y = OdometryData.GetPosition().GetY();
-        // position.z = OdometryData.GetPosition().GetZ();
-        // rotation.x = OdometryData.GetOrientation().GetX();
-        // rotation.y = OdometryData.GetOrientation().GetY();
-        // rotation.z = OdometryData.GetOrientation().GetZ();
-        // rotation.w = OdometryData.GetOrientation().GetW();
-        //ballPos.y = PoseData.GetPosition().GetY();
-        //ballPos.z = PoseData.GetPosition().GetZ();
-        //Changing ball's position to the updated position vector
-        //ball.transform.position = ballPos;
+        rotation.x = OdometryData.GetPoseWithCovariance().GetPose().GetOrientation().GetX();
+        rotation.y = OdometryData.GetPoseWithCovariance().GetPose().GetOrientation().GetY();
+        rotation.z = OdometryData.GetPoseWithCovariance().GetPose().GetOrientation().GetZ();
+        rotation.w = OdometryData.GetPoseWithCovariance().GetPose().GetOrientation().GetW();
     }
 }
