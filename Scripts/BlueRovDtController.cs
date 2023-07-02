@@ -16,7 +16,7 @@ public class BlueRovDtController : MonoBehaviour
     // public GameObject AUVLevel;                     // The AUV's GameObject.
 
     public bool initial_position = true;
-    public float speed = 0.01F;
+    public float speed = 0.001F;
 
     void Update()
     {
