@@ -13,33 +13,33 @@ using ROSBridgeLib.sensor_msgs; // Calling RosBridge message types that come und
 
 
 // Ball subscriber:
-public class BlueRovCameraSubscriber : ROSBridgeSubscriber
+public class BlueRovPtCloudSubscriber : ROSBridgeSubscriber
 {
     public static byte[] data; 
 
     
     public new static string GetMessageTopic() // To get the topic name
     {
-        return "/camera/image_raw"; // Define the topic's name
+        return "orb_slam3/all_points"; // Define the topic's name
     }
 
     public new static string GetMessageType() //To get the topic type
     {
-        return "sensor_msgs/Image"; // Defining the topic type
+        return "sensor_msgs/PointCloud2"; // Defining the topic type
     }
 
     // This function converts JSon to Pose Message
     public new static ROSBridgeMsg ParseMessage(JSONNode msg)
     {
-        return new ImageMsg(msg);
+        return new PointCloud2Msg(msg);
     }
 
     // This function should fire on each received ROS message
     public new static void CallBack(ROSBridgeMsg msg) //msg is the recieved message
     {
 
-        ImageMsg image = (ImageMsg) msg;
-        data = image.GetImage();
+        PointCloud2Msg ptClouds = (PointCloud2Msg) msg;
+        data = ptClouds.GetImage();
         int imageHeight = (int)image.GetHeight();
         int imageWidth = (int)image.GetWidth();
         // int step = (int)image.GetRowStep();
