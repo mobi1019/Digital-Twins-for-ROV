@@ -50,4 +50,6 @@ public class BlueRovCameraSubscriber : ROSBridgeSubscriber
         GameObject cam_image = GameObject.Find("canvasImage");
         cam_image.GetComponent<RawImage>().texture = imageTexture;
     }
+
+
 }

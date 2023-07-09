@@ -41,7 +41,7 @@ public class BlueRovDtController : MonoBehaviour
         float step = speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position , movement, step);
         transform.rotation = Quaternion.Lerp(transform.rotation, rotation, step);
-
+        // Debug.Log(BlueRovPoseSubscriber.all);
     }
 
 }

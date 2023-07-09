@@ -19,6 +19,7 @@ public class BlueRovPoseSubscriber : ROSBridgeSubscriber
     public static Vector3 position; // A vector3 that will store translation vectors
     public static Quaternion rotation; // A Quaternion which will store rotation vectors for roll, pitch and yaw in the first three
                                         // values and button functions in the last value
+    // public static int all;
     public new static string GetMessageTopic() // To get the topic name
     {
         return "/odometry"; // Define the topic's name
@@ -51,5 +52,7 @@ public class BlueRovPoseSubscriber : ROSBridgeSubscriber
         rotation.y = OdometryData.GetPoseWithCovariance().GetPose().GetOrientation().GetY();
         rotation.z = OdometryData.GetPoseWithCovariance().GetPose().GetOrientation().GetZ();
         rotation.w = OdometryData.GetPoseWithCovariance().GetPose().GetOrientation().GetW();
+        // all = 1;
     }
 }
+
