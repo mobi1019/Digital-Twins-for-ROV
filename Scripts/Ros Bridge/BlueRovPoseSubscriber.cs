@@ -22,7 +22,8 @@ public class BlueRovPoseSubscriber : ROSBridgeSubscriber
     // public static int all;
     public new static string GetMessageTopic() // To get the topic name
     {
-        return "/odometry"; // Define the topic's name
+        // return "/odometry"; // Define the topic's name
+        return "/bluerov2/pose_gt"; // Define the topic's name
     }
 
     public new static string GetMessageType() //To get the topic type

@@ -30,7 +30,10 @@ public class BlueRovCloudSubscriber : ROSBridgeSubscriber
     public static int size;
 
     public static Vector3[] pcl;
+
     public static Color[] pcl_color;
+
+    public static float searchRadius = 0.1f;
 
 
     public new static string GetMessageTopic() // To get the topic name
@@ -101,7 +104,5 @@ public class BlueRovCloudSubscriber : ROSBridgeSubscriber
             pcl[n] = new Vector3(x, z, y);
             pcl_color[n] = new Color(r, g, b);
         }
-
-       
-    }
+    }  
 }
