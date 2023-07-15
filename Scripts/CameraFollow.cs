@@ -6,7 +6,7 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     public float mouseSensitivity = 2f;
-    public GameObject rosOO;
+    // public GameObject rosOO;
 
     void Start()
     {

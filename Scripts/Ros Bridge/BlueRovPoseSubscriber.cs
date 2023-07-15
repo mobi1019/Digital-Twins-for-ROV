@@ -5,6 +5,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 using ROSBridgeLib; // Calling the Rosbridge library
 using SimpleJSON;
@@ -19,7 +20,7 @@ public class BlueRovPoseSubscriber : ROSBridgeSubscriber
     public static Vector3 position; // A vector3 that will store translation vectors
     public static Quaternion rotation; // A Quaternion which will store rotation vectors for roll, pitch and yaw in the first three
                                         // values and button functions in the last value
-    // public static int all;
+    public static Text pose_on_canvas;
     public new static string GetMessageTopic() // To get the topic name
     {
         // return "/odometry"; // Define the topic's name
@@ -54,6 +55,9 @@ public class BlueRovPoseSubscriber : ROSBridgeSubscriber
         rotation.z = OdometryData.GetPoseWithCovariance().GetPose().GetOrientation().GetZ();
         rotation.w = OdometryData.GetPoseWithCovariance().GetPose().GetOrientation().GetW();
         // all = 1;
+
+        pose_on_canvas = GameObject.Find("Position").GetComponent<Text>();
+        pose_on_canvas.GetComponent<Text>().text = "Position :" + position.x + " ||| " + position.y + " |||" + position.z;
     }
 }
 

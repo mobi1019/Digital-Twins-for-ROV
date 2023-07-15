@@ -13,8 +13,12 @@ public class BlueRovTeleOpController : MonoBehaviour
     public static float param_value
     {
         get { return _param_value; }
-        set { _param_value = Mathf.Clamp(param_value, -20f, 100f); }
+        set { _param_value = Mathf.Clamp(value, -500f, 500f); }
     }
+
+    public static string displayText;
+
+    public static double xf,yf,zf,xt,yt,zt;
     private float increment = 20.0f;
     private static float _param_value;
     private static Vector3Msg force;
@@ -24,7 +28,13 @@ public class BlueRovTeleOpController : MonoBehaviour
     void Start()
     {
         rosObj = GameObject.Find("BlueRov");
-        OnGUI();
+        param_value = 0;
+        xt = 0;
+        yt = 0;
+        zt = 0;
+        xf = 0;
+        yf = 0;
+        zf = 0;
     }
 
     // Update is called once per frame
@@ -41,112 +51,113 @@ public class BlueRovTeleOpController : MonoBehaviour
 
 
 
-        if (Input.GetKey(KeyCode.RightArrow)){
+        if (Input.GetKeyDown(KeyCode.RightArrow)){
             ytorque = true;
         }
-        if (Input.GetKey(KeyCode.LeftArrow)){
+        if (Input.GetKeyDown(KeyCode.LeftArrow)){
             xtorque = true;
         }
-        if (Input.GetKey(KeyCode.UpArrow)){
+        if (Input.GetKeyDown(KeyCode.UpArrow)){
             ztorque = true;
         }
         // 
 
-        if (Input.GetKey(KeyCode.A)){
+        if (Input.GetKeyDown(KeyCode.A)){
             xforce = true;
         }
-        if (Input.GetKey(KeyCode.D)){
+        if (Input.GetKeyDown(KeyCode.D)){
             yforce = true;
         }
-        if (Input.GetKey(KeyCode.W)){
+        if (Input.GetKeyDown(KeyCode.W)){
             zforce = true;
         }
         // 
 
-        if (Input.GetKey(KeyCode.Q)){
+        if (Input.GetKeyUp(KeyCode.Q)){
             increaseparam = true;
+            Increment(increaseparam);
         }
-        if (Input.GetKey(KeyCode.E)){
+        if (Input.GetKeyUp(KeyCode.E)){
             decreaseparam = true;
+            Decrement(decreaseparam);
         }
        
-        Increment(increaseparam);
-        Decrement(decreaseparam);
+        if ( increaseparam|| decreaseparam || zforce || yforce || xforce || ztorque || ytorque || xtorque){
+            double[] valuesF = new double[3];
+            double[] valuesT = new double[3];
+            if (param_value == 0.0f){
+                valuesF = GetForce(true, true, true);
 
-        double[] valuesF = GetForce(zforce, yforce, xforce);
+                valuesT = GetTorque(true, true, true);
+            } else {
+                valuesF = GetForce(zforce, yforce, xforce);
 
-        double[] valuesT = GetTorque(ztorque, ytorque, xtorque);
+                valuesT = GetTorque(ztorque, ytorque, xtorque);
+            }
 
-        force = new Vector3Msg(
-           valuesF[0], valuesF[1], valuesF[2]
-        );
 
-        torque = new Vector3Msg(
-            valuesT[0], valuesT[1], valuesT[2]
-        );
+            force = new Vector3Msg(
+                valuesF[0], valuesF[1], valuesF[2]
+            );
 
-        Debug.Log(force);
-        Debug.Log(torque);
+            torque = new Vector3Msg(
+                valuesT[0], valuesT[1], valuesT[2]
+            );
 
-        wrench = new WrenchMsg (force, torque); // Defining the message that needs to be published 
-        Debug.Log(wrench);
-        rosObj.GetComponent<ROSInitializer>().ros.Publish(BlueRovTeleopPublisher.GetMessageTopic(), wrench);// Calling the publisher script and publishing the message
+            wrench = new WrenchMsg (force, torque); // Defining the message that needs to be published 
+            Debug.Log(wrench);
+            rosObj.GetComponent<ROSInitializer>().ros.Publish(BlueRovTeleopPublisher.GetMessageTopic(), wrench);// Calling the publisher script and publishing the message
+        }       
     }
 
     public void Increment(bool increaseparam){
-        Debug.Log(increaseparam);
         if (increaseparam){
+            Debug.Log(param_value);
             param_value += increment;
+            displayText = param_value.ToString();
         }
+        Debug.Log(param_value);
     }
 
     public void Decrement(bool decreaseparam){
-        Debug.Log(decreaseparam);
         if (decreaseparam){
             param_value -= increment;
+            displayText = param_value.ToString();
         }
+        Debug.Log(param_value);
     }
 
     public double[] GetForce(bool zforce,bool yforce,bool xforce){
-        Debug.Log(zforce);
-        Debug.Log(yforce);
-        Debug.Log(xforce);
-        double z = (double)(param_value);
-        double x = (double)(param_value);
-        double y = (double)(param_value);
         if (zforce){
-            z = (double)(param_value);
+            zf = (double)(param_value);
         } 
         if (yforce){
-            y = (double)(param_value);
+            yf = (double)(param_value);
         } 
         if (xforce){
-            x = (double)(param_value);
+            xf = (double)(param_value);
         } 
-        double[] result = {x,y,z};
-        Debug.Log(result);
+        double[] result = {xf,yf,zf};
         return result;
     }
 
     public double[] GetTorque(bool ztorque,bool ytorque,bool xtorque){
-        double z = (double)(param_value);
-        double x = (double)(param_value);
-        double y = (double)(param_value);;
         if (ztorque){
-            z = (double)(param_value);
+            zt = (double)(param_value);
         } 
         if (ytorque){
-            y = (double)(param_value);
+            yt = (double)(param_value);
         } 
         if (xtorque){
-            x = (double)(param_value);
+            xt = (double)(param_value);
         } 
-        double[] result = {x,y,z};
+        double[] result = {xt,yt,zt};
         return result;  
     }
     public void OnGUI()
     {
-    //   GUI.Label(Rect(0,0,100,100),param_value);
+        GUI.contentColor = Color.black;
+        GUI.Label(new Rect(0,0,150,150), displayText);
     }
     
 

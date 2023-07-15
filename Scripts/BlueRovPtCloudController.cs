@@ -81,24 +81,26 @@ public class BlueRovPtCloudController : MonoBehaviour
 
         if (positions == null)
         {
-            Debug.Log("e dey empty");
-            return;
-        }
-        mesh.Clear();
-        mesh.vertices = positions;
-        mesh.colors = colours;
-        int[] indices = new int[positions.Length];
+            Debug.Log("no meshes");
+            // return;
+        } else {
+            mesh.Clear();
+            mesh.vertices = positions;
+            mesh.colors = colours;
+            int[] indices = new int[positions.Length];
 
-        for (int i = 0; i < positions.Length; i++)
-        {
-            indices[i] = i;
+            for (int i = 0; i < positions.Length; i++)
+            {
+                indices[i] = i;
+            }
+
+            mesh.SetIndices(indices, MeshTopology.Points, 0);
+            // int nPoints = 65000;
+            // mesh.uv = new Vector2[nPoints];
+            // mesh.normals = new Vector3[nPoints];
+            mf.mesh = mesh;
         }
 
-        mesh.SetIndices(indices, MeshTopology.Points, 0);
-        // int nPoints = 65000;
-        // mesh.uv = new Vector2[nPoints];
-        // mesh.normals = new Vector3[nPoints];
-        mf.mesh = mesh;
     }
     // Update is called once per frame
     void Update()
