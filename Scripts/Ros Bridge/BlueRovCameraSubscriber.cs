@@ -43,7 +43,6 @@ public class BlueRovCameraSubscriber : ROSBridgeSubscriber
         data = image.GetImage();
         int imageHeight = (int)image.GetHeight();
         int imageWidth = (int)image.GetWidth();
-        // int step = (int)image.GetRowStep();
         Texture2D imageTexture = new Texture2D(imageWidth, imageHeight, TextureFormat.RGB24, false);
 
         imageTexture.LoadRawTextureData(data);

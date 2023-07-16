@@ -16,7 +16,7 @@ public class BlueRovDtController : MonoBehaviour
     // public GameObject AUVLevel;                     // The AUV's GameObject.
 
     public bool initial_position = true;
-    public float speed = 0.001F;
+    public float speed = 0.1F;
 
     void Update()
     {
@@ -40,8 +40,10 @@ public class BlueRovDtController : MonoBehaviour
         }
 
         float step = speed * Time.deltaTime;
-        transform.position = movement;//Vector3.MoveTowards(transform.position , movement, step);
-        transform.rotation = rotation;//Quaternion.Lerp(transform.rotation, rotation, step);
+        // transform.position = movement;//Vector3.MoveTowards(transform.position , movement, step);
+        // transform.rotation = rotation;//Quaternion.Lerp(transform.rotation, rotation, step);
+        transform.position = Vector3.MoveTowards(transform.position , movement, step);
+        transform.rotation = rotation;
         // Debug.Log(BlueRovPoseSubscriber.all);
     }
 

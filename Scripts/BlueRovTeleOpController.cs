@@ -157,7 +157,7 @@ public class BlueRovTeleOpController : MonoBehaviour
     public void OnGUI()
     {
         GUI.contentColor = Color.black;
-        GUI.Label(new Rect(0,0,150,150), displayText);
+        GUI.Label(new Rect(0,0,250,250), displayText);
     }
     
 

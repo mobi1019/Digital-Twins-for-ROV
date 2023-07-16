@@ -30,6 +30,7 @@ public class BlueRovPressureSubscriber:ROSBridgePublisher {
 
         pressure_on_canvas = GameObject.Find("Pressure").GetComponent<Text>();
         pressure_on_canvas.GetComponent<Text>().text = "Pressure :" + pressureData.GetFluidPressure();
+        Debug.Log(pressureData.GetFluidPressure());
     }
   
 }

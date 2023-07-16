@@ -20,11 +20,14 @@ public class BlueRovPoseSubscriber : ROSBridgeSubscriber
     public static Vector3 position; // A vector3 that will store translation vectors
     public static Quaternion rotation; // A Quaternion which will store rotation vectors for roll, pitch and yaw in the first three
                                         // values and button functions in the last value
+
+    public static int i = 0;
     public static Text pose_on_canvas;
     public new static string GetMessageTopic() // To get the topic name
     {
         // return "/odometry"; // Define the topic's name
-        return "/bluerov2/pose_gt"; // Define the topic's name
+        // return "/bluerov2/pose_gt"; // Define the topic's name
+        return "/out_topic"; // Define the topic's name
     }
 
     public new static string GetMessageType() //To get the topic type
@@ -41,23 +44,23 @@ public class BlueRovPoseSubscriber : ROSBridgeSubscriber
     // This function should fire on each received ROS message
     public new static void CallBack(ROSBridgeMsg msg) //msg is the recieved message
     {
+            // Debug.Log("Recieved Message : " + msg.ToYAMLString()); // Prints the recieved message
 
-        // Debug.Log("Recieved Message : " + msg.ToYAMLString()); // Prints the recieved message
+            OdometryMsg OdometryData = (OdometryMsg)msg; 
 
-        OdometryMsg OdometryData = (OdometryMsg)msg; 
+            position.x = OdometryData.GetPoseWithCovariance().GetPose().GetPosition().GetX();
+            position.y = OdometryData.GetPoseWithCovariance().GetPose().GetPosition().GetY();
+            position.z = OdometryData.GetPoseWithCovariance().GetPose().GetPosition().GetZ();
+            
+            rotation.x = OdometryData.GetPoseWithCovariance().GetPose().GetOrientation().GetX();
+            rotation.y = OdometryData.GetPoseWithCovariance().GetPose().GetOrientation().GetY();
+            rotation.z = OdometryData.GetPoseWithCovariance().GetPose().GetOrientation().GetZ();
+            rotation.w = OdometryData.GetPoseWithCovariance().GetPose().GetOrientation().GetW();
+            // all = 1;
 
-        position.x = OdometryData.GetPoseWithCovariance().GetPose().GetPosition().GetX();
-        position.y = OdometryData.GetPoseWithCovariance().GetPose().GetPosition().GetY();
-        position.z = OdometryData.GetPoseWithCovariance().GetPose().GetPosition().GetZ();
+            pose_on_canvas = GameObject.Find("Position").GetComponent<Text>();
+            pose_on_canvas.GetComponent<Text>().text = "Position :" + position.x + " ||| " + position.y + " |||" + position.z;
         
-        rotation.x = OdometryData.GetPoseWithCovariance().GetPose().GetOrientation().GetX();
-        rotation.y = OdometryData.GetPoseWithCovariance().GetPose().GetOrientation().GetY();
-        rotation.z = OdometryData.GetPoseWithCovariance().GetPose().GetOrientation().GetZ();
-        rotation.w = OdometryData.GetPoseWithCovariance().GetPose().GetOrientation().GetW();
-        // all = 1;
-
-        pose_on_canvas = GameObject.Find("Position").GetComponent<Text>();
-        pose_on_canvas.GetComponent<Text>().text = "Position :" + position.x + " ||| " + position.y + " |||" + position.z;
     }
 }
 
