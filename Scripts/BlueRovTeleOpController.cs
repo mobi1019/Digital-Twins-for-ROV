@@ -24,6 +24,8 @@ public class BlueRovTeleOpController : MonoBehaviour
     private static Vector3Msg force;
     private static Vector3Msg torque;
     private static WrenchMsg wrench;
+
+    public static Text speed_on_canvas;
  
     void Start()
     {
@@ -81,6 +83,9 @@ public class BlueRovTeleOpController : MonoBehaviour
             decreaseparam = true;
             Decrement(decreaseparam);
         }
+
+        speed_on_canvas = GameObject.Find("Speed").GetComponent<Text>();
+        speed_on_canvas.GetComponent<Text>().text = "Thrust Speed : " + displayText ;
        
         if ( increaseparam|| decreaseparam || zforce || yforce || xforce || ztorque || ytorque || xtorque){
             double[] valuesF = new double[3];
@@ -154,11 +159,11 @@ public class BlueRovTeleOpController : MonoBehaviour
         double[] result = {xt,yt,zt};
         return result;  
     }
-    public void OnGUI()
-    {
-        GUI.contentColor = Color.black;
-        GUI.Label(new Rect(0,0,250,250), displayText);
-    }
+    // public void OnGUI()
+    // {
+    //     GUI.contentColor = Color.black;
+    //     GUI.Label(new Rect(0,0,250,250), displayText);
+    // }
     
 
 }

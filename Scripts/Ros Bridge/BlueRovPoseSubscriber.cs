@@ -22,7 +22,9 @@ public class BlueRovPoseSubscriber : ROSBridgeSubscriber
                                         // values and button functions in the last value
 
     public static int i = 0;
-    public static Text pose_on_canvas;
+    public static Text pose_on_canvas_x;
+    public static Text pose_on_canvas_y;
+    public static Text pose_on_canvas_z;
     public new static string GetMessageTopic() // To get the topic name
     {
         // return "/odometry"; // Define the topic's name
@@ -58,8 +60,12 @@ public class BlueRovPoseSubscriber : ROSBridgeSubscriber
             rotation.w = OdometryData.GetPoseWithCovariance().GetPose().GetOrientation().GetW();
             // all = 1;
 
-            pose_on_canvas = GameObject.Find("Position").GetComponent<Text>();
-            pose_on_canvas.GetComponent<Text>().text = "Position :" + position.x + " ||| " + position.y + " |||" + position.z;
+            pose_on_canvas_x = GameObject.Find("Position-x").GetComponent<Text>();
+            pose_on_canvas_y = GameObject.Find("Position-y").GetComponent<Text>();
+            pose_on_canvas_z = GameObject.Find("Position-z").GetComponent<Text>();
+            pose_on_canvas_x.GetComponent<Text>().text = "Position-x : " + position.x;
+            pose_on_canvas_y.GetComponent<Text>().text = "Position-y : " + position.y;
+            pose_on_canvas_z.GetComponent<Text>().text = "Position-z : " + position.z;
         
     }
 }
