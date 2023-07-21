@@ -29,10 +29,15 @@ public class BlueRovDtController : MonoBehaviour
 		float rot_X = BlueRovPoseSubscriber.rotation.x;
 		float w = BlueRovPoseSubscriber.rotation.w;
 		
-		Vector3 movement = new Vector3(pos_X, pos_Z, pos_Y);        // Make a vector for translation using the user input. 
-		Quaternion rotation = new Quaternion(-1 * rot_Y, rot_Z, -1 * rot_X, w);       // Make a vector for rotation using the user input. 
+        // gazebo
+		// Vector3 movement = new Vector3(pos_X, pos_Z, pos_Y);      
+		// Quaternion rotation = new Quaternion(-1 * rot_Y, rot_Z, -1 * rot_X, w);       
 
-      
+        //orb-slam
+        Vector3 movement = new Vector3(pos_X, -pos_Y, -pos_Z);        
+		Quaternion rotation = new Quaternion(rot_X, -rot_Y, rot_Z, w);       
+
+
 		if (initial_position){
             initial_position = false;
             //transform.position = movement;

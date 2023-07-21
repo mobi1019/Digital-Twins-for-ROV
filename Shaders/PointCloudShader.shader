@@ -39,7 +39,7 @@
 			{
 				VertexOutput o;
 				o.pos = UnityObjectToClipPos(v.v);
-				o.size = 10.0;
+				o.size = 3.0;
 				o.col = v.color;
 				o.uv = v.uv;
 

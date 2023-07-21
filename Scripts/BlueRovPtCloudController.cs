@@ -51,7 +51,7 @@ public class BlueRovPtCloudController : MonoBehaviour
         // pcl_interpolated = pcl_interpolated_list.ToArray();
         // Debug.Log(BlueRovCloudSubscriber.pcl_interpolated_list);
         positions = BlueRovCloudSubscriber.pcl;
-        colours = BlueRovCloudSubscriber.pcl_color;
+        // colours = BlueRovCloudSubscriber.pcl_color;
         // foreach (Vector3 inputPoint in positions)
         // {
         //         // Vector3 interpolatedPoint = MLSInterpolate(inputPoint, pcl);
@@ -86,7 +86,7 @@ public class BlueRovPtCloudController : MonoBehaviour
         } else {
             mesh.Clear();
             mesh.vertices = positions;
-            mesh.colors = colours;
+            // mesh.colors = colours;
             int[] indices = new int[positions.Length];
 
             for (int i = 0; i < positions.Length; i++)
