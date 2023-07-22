@@ -20,8 +20,9 @@ public class BlueRovCameraSubscriber : ROSBridgeSubscriber
     
     public new static string GetMessageTopic() // To get the topic name
     {
-        return "/camera/image_raw"; // Define the topic's name
+        // return "/camera/image_raw"; // Define the topic's name
         // return "/bluerov2/camera_front/camera_image"; // Define the topic's name
+        return "/cam0/image_raw"; // Define the topic's name
     }
 
     public new static string GetMessageType() //To get the topic type

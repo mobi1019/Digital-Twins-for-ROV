@@ -34,14 +34,15 @@ public class BlueRovDtController : MonoBehaviour
 		// Quaternion rotation = new Quaternion(-1 * rot_Y, rot_Z, -1 * rot_X, w);       
 
         //orb-slam
-        Vector3 movement = new Vector3(pos_X, -pos_Y, -pos_Z);        
-		Quaternion rotation = new Quaternion(rot_X, -rot_Y, rot_Z, w);       
-
+        // Vector3 movement = new Vector3(pos_X, -pos_Y, -pos_Z);        
+		// Quaternion rotation = new Quaternion(rot_X, -rot_Y, rot_Z, w);       
+        Vector3 movement = new Vector3(pos_X, -pos_Z, -pos_Y);        
+		Quaternion rotation = new Quaternion(-1 * rot_X, rot_Z, -1 * rot_Y, w);
 
 		if (initial_position){
             initial_position = false;
-            //transform.position = movement;
-            //transform.rotation = rotation;
+            // transform.position = movement;
+            // transform.rotation = rotation;
         }
 
         float step = speed * Time.deltaTime;

@@ -1,9 +1,9 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 
-public class CameraFollow : MonoBehaviour
+public class CameraFollow2 : MonoBehaviour
 {
     public float mouseSensitivity = 2f;
 
@@ -29,8 +29,8 @@ public class CameraFollow : MonoBehaviour
     }
     void LateUpdate()
     {
-        transform.position = new Vector3(robot.transform.position.x, (robot.transform.position.y), (robot.transform.position.z - zdistance));
-        // transform.position = new Vector3(robot.transform.position.x, (robot.transform.position.y + zdistance), (robot.transform.position.z));
+        // transform.position = new Vector3(robot.transform.position.x, (robot.transform.position.y), (robot.transform.position.z - zdistance));
+        transform.position = new Vector3(robot.transform.position.x, (robot.transform.position.y + zdistance), (robot.transform.position.z));
     }
 
 }

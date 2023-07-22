@@ -27,11 +27,11 @@ public class BlueRovPoseSubscriber : ROSBridgeSubscriber
     public static Text pose_on_canvas_z;
     public new static string GetMessageTopic() // To get the topic name
     {
-        // return "/odometry"; // Define the topic's name
-        // return "/bluerov2/pose_gt"; // Define the topic's name
-        // return "/out_topic"; // Define the topic's name
-        return "/orb_slam3/camera_pose";
-        // return "/out_pose";
+        // return "/odometry"; // sparus rosbag topic
+        // return "/bluerov2/pose_gt"; // simulation topic
+        // return "/out_topic"; // simulation throttled topic
+        return "/orb_slam3/camera_pose"; //orb_slam pose
+        // return "/out_pose"; //orb_slam throttled pose
     }
 
     public new static string GetMessageType() //To get the topic type
@@ -50,7 +50,7 @@ public class BlueRovPoseSubscriber : ROSBridgeSubscriber
     // This function should fire on each received ROS message
     public new static void CallBack(ROSBridgeMsg msg) //msg is the recieved message
     {
-            // Debug.Log("Recieved Message : " + msg.ToYAMLString()); // Prints the recieved message
+            // // for againts robots real pose
             // OdometryMsg OdometryData = (OdometryMsg)msg; 
             // position.x = OdometryData.GetPoseWithCovariance().GetPose().GetPosition().GetX();
             // position.y = OdometryData.GetPoseWithCovariance().GetPose().GetPosition().GetY();
@@ -63,7 +63,7 @@ public class BlueRovPoseSubscriber : ROSBridgeSubscriber
 
             // all = 1;
 
-
+            // // for against camera in slam
             PoseStampedMsg PoseStampedData = (PoseStampedMsg)msg; 
             position.x = PoseStampedData.GetPose().GetPosition().GetX();
             position.y = PoseStampedData.GetPose().GetPosition().GetY();
