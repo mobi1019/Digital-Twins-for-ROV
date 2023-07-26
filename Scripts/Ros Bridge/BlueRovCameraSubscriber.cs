@@ -20,9 +20,9 @@ public class BlueRovCameraSubscriber : ROSBridgeSubscriber
     
     public new static string GetMessageTopic() // To get the topic name
     {
-        // return "/camera/image_raw"; // Define the topic's name
+        return "/camera/image_raw"; // Define the topic's name
         // return "/bluerov2/camera_front/camera_image"; // Define the topic's name
-        return "/cam0/image_raw"; // Define the topic's name
+  
     }
 
     public new static string GetMessageType() //To get the topic type
@@ -44,7 +44,8 @@ public class BlueRovCameraSubscriber : ROSBridgeSubscriber
         data = image.GetImage();
         int imageHeight = (int)image.GetHeight();
         int imageWidth = (int)image.GetWidth();
-        Texture2D imageTexture = new Texture2D(imageWidth, imageHeight, TextureFormat.RGB24, false);
+        // Texture2D imageTexture = new Texture2D(imageWidth, imageHeight, TextureFormat.RGB24, false);
+        Texture2D imageTexture = new Texture2D(imageWidth, imageHeight, TextureFormat.Alpha8, false);
 
         imageTexture.LoadRawTextureData(data);
         imageTexture.Apply();

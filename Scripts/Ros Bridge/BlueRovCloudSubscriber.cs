@@ -38,8 +38,8 @@ public class BlueRovCloudSubscriber : ROSBridgeSubscriber
 
     public new static string GetMessageTopic() // To get the topic name
     {
-        // return "/orb_slam3/all_points"; // Define the topic's name
-        return "/dense_cloud"; // Define the topic's name
+        return "/orb_slam3/all_points"; // Define the topic's name
+        // return "/dense_cloud"; // Define the topic's name
     }
 
     public new static string GetMessageType() //To get the topic type
