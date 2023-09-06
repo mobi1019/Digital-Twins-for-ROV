@@ -1,20 +1,17 @@
-// This script serves a subscriber for Pose type message and can be edited according to the user's need. Here, it receives 
-// control commands and button functions which are then called by their respective scripts. 
-//Called by RosInitializer, therefor doesn't need to be attached to an object.
-
+// point cloud subscriber script 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-using ROSBridgeLib; // Calling the Rosbridge library
+using ROSBridgeLib; 
 using SimpleJSON;
 
-using ROSBridgeLib.sensor_msgs; // Calling RosBridge message types that come under geometry_ msgs (So that we can use Pose message type)
-using ROSBridgeLib.std_msgs; // Calling RosBridge message types that come under geometry_ msgs (So that we can use Pose message type)
+using ROSBridgeLib.sensor_msgs; 
+using ROSBridgeLib.std_msgs; 
 // using PointCloud;
 
-// Ball subscriber:
 public class BlueRovCloudSubscriber : ROSBridgeSubscriber
 {
 
@@ -33,31 +30,32 @@ public class BlueRovCloudSubscriber : ROSBridgeSubscriber
 
     public static Color[] pcl_color;
 
-    // public static float searchRadius = 0.1f;
 
-
-    public new static string GetMessageTopic() // To get the topic name
+    public new static string GetMessageTopic() 
     {
-        return "/orb_slam3/all_points"; // Define the topic's name
-        // return "/dense_cloud"; // Define the topic's name
+        // return "/orb_slam3/all_points"; // orb slam pt cloud topic 
+        return "/dense_cloud"; // dense pt cloud node topic from ROS
     }
 
-    public new static string GetMessageType() //To get the topic type
+    public new static string GetMessageType() 
     {
-        return "sensor_msgs/PointCloud2"; // Defining the topic type
+        return "sensor_msgs/PointCloud2"; 
     }
 
-    // This function converts JSon to Pose Message
     public new static ROSBridgeMsg ParseMessage(JSONNode msg)
     {
         return new PointCloud2Msg(msg);
     }
 
-    // This function should fire on each received ROS message
     public new static void CallBack(ROSBridgeMsg msg) //msg is the recieved message
     {
        
         PointCloud2Msg ptClouds = (PointCloud2Msg)msg;
+
+        // test for time/latency
+        // long secs = (long) (DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds;
+        // Debug.Log("Time after drawing point clouds in milliseconds = " + secs);
+
         size = ptClouds.GetData().GetLength(0);
         byteArray = new byte[size];
         byteArray = ptClouds.GetData();
@@ -79,10 +77,10 @@ public class BlueRovCloudSubscriber : ROSBridgeSubscriber
         float r;
         float g;
         float b;
-
-        //この部分でbyte型をfloatに変換         
+       
         for (int n = 0; n < size; n++)
         {
+            // only pt cloud x,y,z cordinates sent, not colour
             x_posi = (int)(n *ptClouds.GetPointStep() + 0);
             y_posi = (int)(n *ptClouds.GetPointStep() + 4);
             z_posi = (int)(n *ptClouds.GetPointStep() + 8);

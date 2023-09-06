@@ -1,10 +1,10 @@
-// A compressed Image publisher for forward-facing camera. 
+// pressure subscriber script
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using ROSBridgeLib; // Calling the Rosbridge library
-using ROSBridgeLib.sensor_msgs; // Calling RosBridge message types that come under sensor_ msgs (So that we can use Compressed Image message type)
+using ROSBridgeLib; 
+using ROSBridgeLib.sensor_msgs; 
 using SimpleJSON;
 
 public class BlueRovPressureSubscriber:ROSBridgePublisher {
@@ -24,8 +24,7 @@ public class BlueRovPressureSubscriber:ROSBridgePublisher {
         return new FluidPressureMsg(msg);
     }
 
-    // This function should fire on each received ROS message
-    public new static void CallBack(ROSBridgeMsg msg) //msg is the recieved message
+    public new static void CallBack(ROSBridgeMsg msg) 
     {
         FluidPressureMsg pressureData = (FluidPressureMsg)msg;
         pres = pressureData.GetFluidPressure();

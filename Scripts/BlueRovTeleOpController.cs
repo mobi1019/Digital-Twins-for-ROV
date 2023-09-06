@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿// This controller processes teleop messages
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using ROSBridgeLib.geometry_msgs;
 using ROSBridgeLib.std_msgs;
@@ -8,7 +10,6 @@ using UnityEngine.UI;
 
 public class BlueRovTeleOpController : MonoBehaviour
 {
-    // Start is called before the first frame update
     public GameObject rosObj;
     public static float param_value
     {
@@ -42,6 +43,9 @@ public class BlueRovTeleOpController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // keys are mapped according to thruster manager, 3 translational forces and 3 rotational forces
+        // keys also mapped for increasing and decreasing speed of these forces
+        // increase or decrease force or rotation according to set speed (param)
         bool zforce = false;
         bool yforce = false;
         bool xforce = false;
@@ -73,7 +77,6 @@ public class BlueRovTeleOpController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W)){
             zforce = true;
         }
-        // 
 
         if (Input.GetKeyUp(KeyCode.Q)){
             increaseparam = true;
@@ -111,7 +114,14 @@ public class BlueRovTeleOpController : MonoBehaviour
 
             wrench = new WrenchMsg (force, torque); // Defining the message that needs to be published 
             Debug.Log(wrench);
+            
+         
             rosObj.GetComponent<ROSInitializer>().ros.Publish(BlueRovTeleopPublisher.GetMessageTopic(), wrench);// Calling the publisher script and publishing the message
+            
+            // test for time / latency
+            // long secs = (long) (DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds;
+            // Debug.Log("Time after drawing point clouds in milliseconds = " + secs);
+
         }       
     }
 
@@ -159,6 +169,8 @@ public class BlueRovTeleOpController : MonoBehaviour
         double[] result = {xt,yt,zt};
         return result;  
     }
+
+    // //display param/speed in GUI
     // public void OnGUI()
     // {
     //     GUI.contentColor = Color.black;

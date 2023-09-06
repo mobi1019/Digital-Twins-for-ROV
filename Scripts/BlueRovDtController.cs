@@ -1,9 +1,4 @@
-/* This scipt uses simple chnages in the transform of the AUV rather than applying actual force on the body. 
- * Therefore this script cannot be used regularly as this will not give updates about the body's velocity and accelaration.
- * This is also impractical as in the actual vehicle, the movement will be done by the thrusters applying forces at various points.
- * Therefore this script serves only as a stand-in when quick testing is needed. 
- */
-
+// This controller subscribes to pose topics from ros
 using ROSBridgeLib;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,15 +7,12 @@ using UnityEngine;
 
 public class BlueRovDtController : MonoBehaviour
 {
-    // public GameObject waterLevel;                   // GameObject assosicated with the water surface.  
-    // public GameObject AUVLevel;                     // The AUV's GameObject.
 
     public bool initial_position = true;
     public float speed = 0.1F;
 
     void Update()
     {
-        // The following lines of code are used to import control values coming from ROS,  subscribed by the Subscriber script
 		float pos_Y = BlueRovPoseSubscriber.position.y;           
 		float pos_Z = BlueRovPoseSubscriber.position.z;
 		float pos_X = BlueRovPoseSubscriber.position.x;
@@ -29,13 +21,12 @@ public class BlueRovDtController : MonoBehaviour
 		float rot_X = BlueRovPoseSubscriber.rotation.x;
 		float w = BlueRovPoseSubscriber.rotation.w;
 		
-        // gazebo
+        // During testing different systems had different coordinates conversion
+        // gazebo UUVSimulation
 		// Vector3 movement = new Vector3(pos_X, pos_Z, pos_Y);      
 		// Quaternion rotation = new Quaternion(-1 * rot_Y, rot_Z, -1 * rot_X, w);       
 
-        //orb-slam
-        // Vector3 movement = new Vector3(pos_X, -pos_Y, -pos_Z);        
-		// Quaternion rotation = new Quaternion(rot_X, -rot_Y, rot_Z, w);       
+        //orb-slam3 with harbour dataset      
         Vector3 movement = new Vector3(pos_X, -pos_Z, -pos_Y);        
 		Quaternion rotation = new Quaternion(-1 * rot_X, rot_Z, -1 * rot_Y, w);
 
@@ -46,11 +37,10 @@ public class BlueRovDtController : MonoBehaviour
         }
 
         float step = speed * Time.deltaTime;
-        // transform.position = movement;//Vector3.MoveTowards(transform.position , movement, step);
-        // transform.rotation = rotation;//Quaternion.Lerp(transform.rotation, rotation, step);
+        // transform.position = movement;
+        // transform.rotation = rotation;
         transform.position = Vector3.MoveTowards(transform.position , movement, step);
         transform.rotation = rotation;
-        // Debug.Log(BlueRovPoseSubscriber.all);
     }
 
 }

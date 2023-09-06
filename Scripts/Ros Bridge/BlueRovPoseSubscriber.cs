@@ -1,56 +1,54 @@
-﻿// This script serves a subscriber for Pose type message and can be edited according to the user's need. Here, it receives 
-// control commands and button functions which are then called by their respective scripts. 
-//Called by RosInitializer, therefor doesn't need to be attached to an object.
-
+﻿// pose subscriber script
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-using ROSBridgeLib; // Calling the Rosbridge library
+using ROSBridgeLib; 
 using SimpleJSON;
 using ROSBridgeLib.geometry_msgs;
 using ROSBridgeLib.auv_msgs;
-using ROSBridgeLib.nav_msgs; // Calling RosBridge message types that come under geometry_ msgs (So that we can use Pose message type)
+using ROSBridgeLib.nav_msgs; 
 
 
-// Ball subscriber:
 public class BlueRovPoseSubscriber : ROSBridgeSubscriber
 {
-    public static Vector3 position; // A vector3 that will store translation vectors
-    public static Quaternion rotation; // A Quaternion which will store rotation vectors for roll, pitch and yaw in the first three
-                                        // values and button functions in the last value
+    public static Vector3 position; 
+    public static Quaternion rotation; 
+                                        
 
     public static int i = 0;
+
+    // canvas pose varaibles
     public static Text pose_on_canvas_x;
     public static Text pose_on_canvas_y;
     public static Text pose_on_canvas_z;
-    public new static string GetMessageTopic() // To get the topic name
+    public new static string GetMessageTopic() 
     {
         // return "/odometry"; // sparus rosbag topic
-        // return "/bluerov2/pose_gt"; // simulation topic
-        // return "/out_topic"; // simulation throttled topic
-        return "/orb_slam3/camera_pose"; //orb_slam pose
-        // return "/out_pose"; //orb_slam throttled pose
+        // return "/bluerov2/pose_gt"; // uuv simulation topic
+        // return "/out_topic"; // uuv simulation throttled topic
+        return "/orb_slam3/camera_pose"; //orb_slam pose topic
+        // return "/out_pose"; //orb_slam throttled pose topic
     }
 
-    public new static string GetMessageType() //To get the topic type
+    public new static string GetMessageType() 
     {
-        // return "nav_msgs/Odometry"; // Defining the topic type
-        return "geometry_msgs/PoseStamped"; // Defining the topic type
+        // return "nav_msgs/Odometry"; //uuv simulation message type
+        return "geometry_msgs/PoseStamped"; // orb slam message type
     }
 
-    // This function converts JSon to Pose Message
     public new static ROSBridgeMsg ParseMessage(JSONNode msg)
     {
-        // return new OdometryMsg(msg);
-        return new PoseStampedMsg(msg);
+        // return new OdometryMsg(msg); // uuv simulation topic
+        return new PoseStampedMsg(msg); // orb slam message
     }
 
-    // This function should fire on each received ROS message
     public new static void CallBack(ROSBridgeMsg msg) //msg is the recieved message
     {
-            // // for againts robots real pose
+            
+            // // for uuv simulation
             // OdometryMsg OdometryData = (OdometryMsg)msg; 
             // position.x = OdometryData.GetPoseWithCovariance().GetPose().GetPosition().GetX();
             // position.y = OdometryData.GetPoseWithCovariance().GetPose().GetPosition().GetY();
@@ -59,11 +57,12 @@ public class BlueRovPoseSubscriber : ROSBridgeSubscriber
             // rotation.y = OdometryData.GetPoseWithCovariance().GetPose().GetOrientation().GetY();
             // rotation.z = OdometryData.GetPoseWithCovariance().GetPose().GetOrientation().GetZ();
             // rotation.w = OdometryData.GetPoseWithCovariance().GetPose().GetOrientation().GetW();
+            
+            // test for time / latency
+            // long secs = (long) (DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds;
+            // Debug.Log("Time after recieving image = " + secs);
 
-
-            // all = 1;
-
-            // // for against camera in slam
+            // // for orb slam
             PoseStampedMsg PoseStampedData = (PoseStampedMsg)msg; 
             position.x = PoseStampedData.GetPose().GetPosition().GetX();
             position.y = PoseStampedData.GetPose().GetPosition().GetY();
@@ -73,6 +72,7 @@ public class BlueRovPoseSubscriber : ROSBridgeSubscriber
             rotation.z = PoseStampedData.GetPose().GetOrientation().GetZ();
             rotation.w = PoseStampedData.GetPose().GetOrientation().GetW();
 
+            // place pose on canvas
             pose_on_canvas_x = GameObject.Find("Position-x").GetComponent<Text>();
             pose_on_canvas_y = GameObject.Find("Position-y").GetComponent<Text>();
             pose_on_canvas_z = GameObject.Find("Position-z").GetComponent<Text>();

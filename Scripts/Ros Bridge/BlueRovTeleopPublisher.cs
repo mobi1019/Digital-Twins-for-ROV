@@ -1,15 +1,16 @@
-// A compressed Image publisher for forward-facing camera. 
+// teleop publisher script
+using System; 
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using ROSBridgeLib; // Calling the Rosbridge library
-using ROSBridgeLib.geometry_msgs; // Calling RosBridge message types that come under sensor_ msgs (So that we can use Compressed Image message type)
+using ROSBridgeLib; 
+using ROSBridgeLib.geometry_msgs; 
 using SimpleJSON;
 
 public class BlueRovTeleopPublisher:ROSBridgePublisher {
     
     public static string GetMessageTopic() {
-        return "/bluerov2/thruster_manager/input";
+        return "/bluerov2/thruster_manager/input"; // uuv simulation thruster manager topic
     }  
     
     public static string GetMessageType() {
